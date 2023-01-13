@@ -5,11 +5,11 @@ import { prisma } from "prisma";
 
 class PrismaRoutesRepository implements IRoutesRepository {
   async create(data: ICreateRouteDTO): Promise<Route> {
-    const { description, distance, duration, name, destination, origin, userId, originNeighborhood } = data
+    const { distance, duration, name, destination, origin, userId, originNeighborhood } = data
 
     const route = await prisma.route.create({
       data: {
-        description,
+        
         distance,
         duration,
         name,
@@ -21,6 +21,35 @@ class PrismaRoutesRepository implements IRoutesRepository {
     })
 
     return route
+  }
+
+  async findById(id: string): Promise<Route | null> {
+    const route = await prisma.route.findUnique({
+      where: {
+        id
+      }
+    })
+
+    return route
+  }
+
+  async listByUser(userId: string): Promise<Route[]> {
+    const routes = await prisma.route.findMany({
+      where: {
+        createdBy: userId
+      }
+    })
+
+    return routes
+  }
+  async listByNeighborhood(neighborhood: string): Promise<Route[]> {
+    const routes = await prisma.route.findMany({
+      where: {
+        originNeighborhood: neighborhood
+      }
+    })
+
+    return routes
   }
 }
 

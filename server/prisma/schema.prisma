@@ -32,7 +32,6 @@ model User {
 model Route {
   id                 String   @id @default(uuid())
   name               String
-  description        String
   distance           Int
   duration           Int
   destination        String[]
