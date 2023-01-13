@@ -8,9 +8,9 @@ class LoginUserController {
 
     const loginUserUseCase = container.resolve(LoginUserUseCase)
 
-    const { token, user } = await loginUserUseCase.execute({ email, password })
+    const { token, refreshToken, user } = await loginUserUseCase.execute({ email, password })
 
-    return res.status(200).json({ message: "Successfull logged in", token, user })
+    return res.status(200).json({ message: "Successfull logged in", token, refreshToken, user })
   }
 }
 

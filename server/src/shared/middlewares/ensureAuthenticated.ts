@@ -22,9 +22,9 @@ export default function ensureAuthenticated(
   jwt.verify(token, process.env.JWT_SECRET!, (err: any, decoded: any) => {
     if (err) {
       if (err.message === "jwt expired") {
-        throw new AppError("Expired", 401)
+        throw new AppError("Expired Token", 401)
       } else {
-        throw new AppError("Invalid", 401)
+        throw new AppError("Invalid Token", 401)
       }
     }
 

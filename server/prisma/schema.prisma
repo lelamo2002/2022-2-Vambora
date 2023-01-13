@@ -25,8 +25,20 @@ model User {
   friends         User[] @relation("friends")
   friendsRelation User[] @relation("friends")
 
-  Ride   Ride?   @relation(fields: [rideId], references: [id])
-  rideId String?
+  Ride         Ride?          @relation(fields: [rideId], references: [id])
+  rideId       String?
+  RefreshToken RefreshToken[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String @id @default(uuid())
+  expiresIn Int
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@map("refresh_token")
 }
 
 model Route {
@@ -41,6 +53,8 @@ model Route {
   createdAt DateTime @default(now())
   createdBy String
   Ride      Ride[]
+
+  @@map("routes")
 }
 
 model Car {
@@ -52,6 +66,8 @@ model Car {
   color         String
   license_plate String
   Ride          Ride[]
+
+  @@map("cars")
 }
 
 model Ride {
@@ -68,4 +84,6 @@ model Ride {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   carId     String
+
+  @@map("rides")
 }
