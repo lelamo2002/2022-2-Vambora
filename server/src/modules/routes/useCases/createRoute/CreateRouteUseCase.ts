@@ -30,7 +30,7 @@ class CreateRouteUseCase {
       duration,
       origin,
       destination,
-      originNeighborhood
+      originNeighborhood: originNeighborhood.toLowerCase()
     })
 
     return route

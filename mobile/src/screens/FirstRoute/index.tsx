@@ -120,11 +120,11 @@ export function FirstRoute() {
 
     const user = await AsyncStorage.getItem("@vambora:user");
 
-    const token = JSON.parse(user).token;
+    const { id, token } = JSON.parse(user);
 
     try {
       await api.post(
-        "/route",
+        `/route/${id}`,
         {
           name: "Rota Default",
           description: "Rota criada no registro do usuário",

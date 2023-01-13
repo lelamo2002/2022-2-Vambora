@@ -58,9 +58,8 @@ export default function SingIn() {
       await AsyncStorage.setItem("@vambora:user", JSON.stringify(user));
 
       if (!response.data.user.isVerified) {
-        setErrorMessage("Verifique sua conta para continuar!");
-        setIsErrorModalOpen(true);
         navigation.navigate("VerificationCode");
+        setIsLoading(false);
         return;
       }
 

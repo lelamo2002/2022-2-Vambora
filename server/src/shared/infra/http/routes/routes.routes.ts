@@ -10,6 +10,6 @@ const createRouteController = new CreateRouteController()
 const listRoutesByUserUseCase = new ListRoutesByUserController()
 const listRoutesByNeighborhoodUseCase = new ListRoutesByNeighborhoodController()
 
-routesRoutes.post("/:id", ensureAuthenticated, createRouteController.handle)
-routesRoutes.get("/user/:id", ensureAuthenticated, listRoutesByUserUseCase.handle)
+routesRoutes.post("/", ensureAuthenticated, createRouteController.handle)
+routesRoutes.get("/user", ensureAuthenticated, listRoutesByUserUseCase.handle)
 routesRoutes.get("/:neighborhood", ensureAuthenticated, listRoutesByNeighborhoodUseCase.handle)

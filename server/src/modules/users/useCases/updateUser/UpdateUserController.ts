@@ -6,7 +6,7 @@ import { UpdateUserUseCase } from "./UpdateUserUseCase";
 
 class UpdateUserController {
   async handle(req: Request, res: Response) {
-    const { user_id } = req.headers;
+    const user_id = req.user;
     const { name, email, password, enrollment } = req.body;
 
     if (!user_id) {
@@ -15,7 +15,7 @@ class UpdateUserController {
 
     const updateUserUseCase = container.resolve(UpdateUserUseCase)
 
-    const user = await updateUserUseCase.execute({ user_id: user_id as string, name, email, password, enrollment });
+    const user = await updateUserUseCase.execute({ user_id, name, email, password, enrollment });
 
     res.status(200).json(user)
   }

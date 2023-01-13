@@ -4,7 +4,7 @@ import { ListRoutesByNeighborhoodUseCase } from "./ListRoutesByNeighborhoodUseCa
 
 class ListRoutesByNeighborhoodController {
   async handle(req: Request, res: Response) {
-    const {neighborhood} = req.params;
+    const { neighborhood } = req.params;
 
     const listRouteByNeighborhoodUseCase = container.resolve(ListRoutesByNeighborhoodUseCase)
     const route = await listRouteByNeighborhoodUseCase.execute(neighborhood)

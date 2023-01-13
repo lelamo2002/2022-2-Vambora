@@ -4,7 +4,7 @@ import { ListRoutesByUserUseCase } from "./ListRoutesByUserUseCase";
 
 class ListRoutesByUserController {
   async handle(req: Request, res: Response) {
-    const {id} = req.params;
+    const id = req.user
 
     const listRouteByUserUseCase = container.resolve(ListRoutesByUserUseCase)
     const route = await listRouteByUserUseCase.execute(id)
