@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const localhost = process.env.LOCALHOST
+const localhost = process.env.LOCALHOST;
 const port = "3333";
 
 if (!localhost) {
