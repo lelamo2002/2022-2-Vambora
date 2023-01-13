@@ -12,7 +12,6 @@ describe("Create Route Use Case", () => {
     const route = await createRouteUseCase.execute({
       userId: "123_id",
       name: "Route Test",
-      description: "Route Test Description",
       distance: 10,
       duration: 10,
       origin: ["Origin"],
