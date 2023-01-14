@@ -115,7 +115,7 @@ export default function Register() {
       <SafeAreaView>
         <ScrollContainer>
           <Form>
-            <TextGlobal weight="700" size={44}>
+            <TextGlobal weight="700" size={48}>
               Registrar-se
             </TextGlobal>
             <Inputs>
