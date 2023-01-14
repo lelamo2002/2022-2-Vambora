@@ -25,6 +25,7 @@ import { GOOGLE_MAPS_API_KEY } from "@env";
 import MapViewDirections from "react-native-maps-directions";
 import { api } from "../../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Geocoder from "react-native-geocoding";
 
 export function FirstRoute() {
   const [origin, setOrigin] = useState({
@@ -43,6 +44,8 @@ export function FirstRoute() {
   const mapRef = useRef(null);
 
   useEffect(() => {
+    Geocoder.init(GOOGLE_MAPS_API_KEY);
+
     async function getUserLocationPermissions() {
       if (Platform.OS !== "web") {
         const { status } = await requestForegroundPermissionsAsync();
@@ -60,6 +63,18 @@ export function FirstRoute() {
           setOrigin({
             latitude: userPosition.coords.latitude,
             longitude: userPosition.coords.longitude,
+          });
+
+          Geocoder.from(
+            userPosition.coords.latitude,
+            userPosition.coords.longitude
+          ).then((info) => {
+            setOriginNeighborhood(
+              info.results[0].address_components[3].long_name
+                .toLowerCase()
+                .split(" ")
+                .join("-")
+            );
           });
         }
       }
@@ -120,11 +135,11 @@ export function FirstRoute() {
 
     const user = await AsyncStorage.getItem("@vambora:user");
 
-    const { id, token } = JSON.parse(user);
+    const { token } = JSON.parse(user);
 
     try {
       await api.post(
-        `/route/${id}`,
+        `/route`,
         {
           name: "Rota Default",
           description: "Rota criada no registro do usuário",
@@ -244,7 +259,12 @@ export function FirstRoute() {
                   latitude: details.geometry.location.lat,
                   longitude: details.geometry.location.lng,
                 });
-                setOriginNeighborhood(data.terms[data.terms.length - 4].value);
+                setOriginNeighborhood(
+                  data.terms[data.terms.length - 4].value
+                    .toLowerCase()
+                    .split(" ")
+                    .join("-")
+                );
               }}
               fetchDetails={true}
               GooglePlacesSearchQuery={{
