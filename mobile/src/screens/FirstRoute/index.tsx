@@ -26,6 +26,7 @@ import MapViewDirections from "react-native-maps-directions";
 import { api } from "../../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Geocoder from "react-native-geocoding";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export function FirstRoute() {
   const [origin, setOrigin] = useState({
@@ -70,7 +71,9 @@ export function FirstRoute() {
             userPosition.coords.longitude
           ).then((info) => {
             setOriginNeighborhood(
-              info.results[0].address_components[3].long_name
+              info.results[0].address_components[
+                info.results[0].address_components.length - 5
+              ].long_name
                 .toLowerCase()
                 .split(" ")
                 .join("-")
@@ -313,6 +316,7 @@ export function FirstRoute() {
           <ContinueButton disabled={!hasSelectedRoute} onPress={handleContinue}>
             <ContinueButtonText>Continuar</ContinueButtonText>
           </ContinueButton>
+          <SafeAreaView />
         </RoutesContainer>
       </HalfContainer>
     </Container>

@@ -23,7 +23,7 @@ export const Title = styled.Text`
   margin-bottom: 24px;
 `;
 
-export const RoutesContainer = styled.View`
+export const RoutesContainer = styled.ScrollView`
   flex: 1;
   padding: 40px;
 `
@@ -76,6 +76,7 @@ export const ContinueButton = styled.TouchableOpacity<ButtonProps>`
   padding: 12px 24px;
   align-items: center;
   justify-content: center;
+  margin-top: 10px;
 `
 
 export const ContinueButtonText = styled.Text`
