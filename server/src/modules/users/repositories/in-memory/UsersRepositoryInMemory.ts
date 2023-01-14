@@ -1,10 +1,11 @@
-import { User } from "@prisma/client";
+import { RefreshToken, User } from "@prisma/client";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { IUsersRepository } from "../IUsersRepository";
 
 class UsersRepositoryInMemory implements IUsersRepository {
 
   private usersRepository: User[] = [];
+  private refreshTokenRepository: RefreshToken[] = []
 
   async create(data: ICreateUserDTO): Promise<User> {
     const { name, email, enrollment, password } = data
@@ -58,6 +59,19 @@ class UsersRepositoryInMemory implements IUsersRepository {
 
   async deleteUser(user_id: string): Promise<void> {
     this.usersRepository = this.usersRepository.filter((user) => user.id !== user_id)
+  }
+
+  async findRefreshToken(refresh_token: string): Promise<RefreshToken | null> {
+    const refreshToken = this.refreshTokenRepository.find((token) => {
+      return token.id === refresh_token
+    })
+
+    if (refreshToken) return refreshToken
+    else return null
+  }
+
+  async deleteUserRefreshToken(user_id: string): Promise<void> {
+    this.refreshTokenRepository = this.refreshTokenRepository.filter((token) => token.userId !== user_id)
   }
 }
 

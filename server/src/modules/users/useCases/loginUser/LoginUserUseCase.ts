@@ -1,6 +1,5 @@
 import { inject, injectable } from "tsyringe";
 import * as bcrypt from 'bcryptjs'
-import * as jwt from 'jsonwebtoken'
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 import { GenerateRefreshToken } from "@modules/users/provider/GenerateRefreshToken";

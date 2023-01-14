@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { CreateUserController } from '../../../../modules/users/useCases/createUser/CreateUserController';
-import { DeleteUserController } from '../../../../modules/users/useCases/deleteUser/DeleteUserController';
-import { LoginUserController } from '../../../../modules/users/useCases/loginUser/LoginUserController';
-import { ReadUserController } from '../../../../modules/users/useCases/readUser/ReadUserController';
-import { UpdateUserController } from '../../../../modules/users/useCases/updateUser/UpdateUserController';
-import { VerifyUserController } from '../../../../modules/users/useCases/verifyUser/VerifyUserController';
+import { CreateUserController } from '@modules/users/useCases/createUser/CreateUserController';
+import { DeleteUserController } from '@modules/users/useCases/deleteUser/DeleteUserController';
+import { LoginUserController } from '@modules/users/useCases/loginUser/LoginUserController';
+import { ReadUserController } from '@modules/users/useCases/readUser/ReadUserController';
+import { UpdateUserController } from '@modules/users/useCases/updateUser/UpdateUserController';
+import { VerifyUserController } from '@modules/users/useCases/verifyUser/VerifyUserController';
 import ensureAuthenticated from '@shared/middlewares/ensureAuthenticated';
 import { RefreshUserTokenController } from '@modules/users/useCases/refreshUserToken/RefreshUserTokenController';
 
