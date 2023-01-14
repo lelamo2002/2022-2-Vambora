@@ -8,5 +8,5 @@ if (!localhost) {
 }
 
 export const api = axios.create({
-  baseURL: `http://localhost:${port}`,
+  baseURL: `http://${localhost}:${port}`,
 });
