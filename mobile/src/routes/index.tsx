@@ -5,9 +5,13 @@ import Welcome from "../screens/Welcome";
 import SignIn from "../screens/SignIn";
 import Register from "../screens/Register";
 import { VerificationCode } from "../screens/VerificationCode";
-import { Home } from "../screens/Home";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  BottomTabBarProps,
+  createBottomTabNavigator,
+} from "@react-navigation/bottom-tabs";
 import { FirstRoute } from "../screens/FirstRoute";
+import { Home } from "../screens/Home";
+import { CustomBottomTabs } from "./CustomBottomTabs";
 // import Loading from "../pages/Loading";
 
 const Stack = createNativeStackNavigator();
@@ -20,8 +24,14 @@ function TabRoutes() {
         headerShown: false,
       }}
       initialRouteName="Início"
+      tabBar={(props: BottomTabBarProps) => {
+        return <CustomBottomTabs {...props} />;
+      }}
     >
       <Tab.Screen name="Início" component={Home} />
+      <Tab.Screen name="FirstRoute" component={Home} />
+      <Tab.Screen name="Register" component={Home} />
+      <Tab.Screen name="VerificationCode" component={Home} />
     </Tab.Navigator>
   );
 }
@@ -32,7 +42,7 @@ function StackRoutes() {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="Welcome"
+      initialRouteName="BottomTabs"
     >
       <Stack.Screen name="BottomTabs" component={TabRoutes} />
       <Tab.Screen name="FirstRoute" component={FirstRoute} />

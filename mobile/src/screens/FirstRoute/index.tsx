@@ -142,7 +142,7 @@ export function FirstRoute() {
 
     try {
       await api.post(
-        `/route`,
+        "/route",
         {
           name: "Rota Default",
           description: "Rota criada no registro do usuário",

@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 
 export const Container = styled.KeyboardAvoidingView`
   flex: 1;
-  background: #fafafa;
+  background: #262626;
   justify-content: center;
   align-items: center;
 `;
@@ -26,17 +26,16 @@ export const Form = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-weight: 500;
   font-size: 20px;
-  font-weight: 400;
   margin: 0 0 5px 5px;
+  color: #fafafa;
+  font-family: "Inter-500"
 `;
 
 export const InputText = styled.TextInput`
   padding: 10px;
-  border: 1px solid #ABABAB;
   border-radius: 8px;
-  background: #eee;
+  background: #333;
   margin-bottom: 20px;
 `;
 
@@ -44,12 +43,13 @@ export const NoRegisterText = styled.Text`
   margin-left: 5px;
   font-weight: 500;
   font-size: 16px;
+  color : #fafafa;
 `;
 
 export const LinkText = styled.Text`
   color : #8257E5;
-  font-weight: 600;
-  font-size: 16px
+  font-size: 16px;
+  font-family: "Inter-700"
 `;
 
 export const LoadingContainer = styled.View`

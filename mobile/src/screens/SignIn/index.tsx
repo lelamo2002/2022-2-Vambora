@@ -63,7 +63,7 @@ export default function SingIn() {
         return;
       }
 
-      navigation.navigate("FirstRoute");
+      navigation.navigate("Início");
     } catch (error) {
       if (error.response.data.message === "Verify your account to continue") {
         setErrorMessage("Verifique sua conta para continuar!");

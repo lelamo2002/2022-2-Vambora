@@ -9,7 +9,6 @@ import {
   LinkText,
   ScrollContainer,
   Inputs,
-  LoadingContainer,
 } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
@@ -115,7 +114,7 @@ export default function Register() {
       <SafeAreaView>
         <ScrollContainer>
           <Form>
-            <TextGlobal weight="700" size={48}>
+            <TextGlobal weight="600" size={48}>
               Registrar-se
             </TextGlobal>
             <Inputs>

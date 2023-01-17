@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOCALHOST } from "@env"
+import { LOCALHOST } from "@env";
 
 const port = "3333";
 
