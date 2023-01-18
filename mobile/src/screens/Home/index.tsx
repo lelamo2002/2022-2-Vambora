@@ -1,4 +1,4 @@
-import React, { StatusBar } from "react-native";
+import React, { StatusBar, View, Platform } from "react-native";
 import { useRef, useState } from "react";
 import {
   Container,
@@ -9,13 +9,21 @@ import {
   LocationTexts,
   Traject,
   MapContainer,
+  LastMatchsText,
+  LastMatchContainer,
+  LastMathsContainerText,
+  Separator,
+  LastRideText,
+  RideTypeText,
+  TrajectTitle,
 } from "./styles";
 import MapView from "react-native-maps";
 import { PROVIDER_GOOGLE } from "react-native-maps";
 import mapStyle from "./mapStyle.json";
 import HomeIcon from "../../assets/home";
 import SchoolIcon from "../../assets/school";
-import { SafeAreaView } from "react-native-safe-area-context";
+import ClockIcon from "../../assets/clock";
+import { getBottomSpace } from "react-native-iphone-x-helper";
 
 export function Home() {
   const mapRef = useRef(null);
@@ -27,7 +35,6 @@ export function Home() {
   return (
     <Container>
       <StatusBar backgroundColor="#222" barStyle="light-content" />
-      <SafeAreaView />
       <Title>Estudantes perto de você</Title>
       <MapContainer>
         <MapView
@@ -48,6 +55,7 @@ export function Home() {
         ></MapView>
       </MapContainer>
       <TrajectContainer>
+        <TrajectTitle>Seu trajeto padrão</TrajectTitle>
         <Traject>
           <HomeIcon color="#fafafa" />
           <LocationTexts>
@@ -67,6 +75,47 @@ export function Home() {
           </LocationTexts>
         </Traject>
       </TrajectContainer>
+
+      <View
+        style={{
+          marginBottom: 40 + getBottomSpace(),
+        }}
+      >
+        <LastMatchsText>Suas ultimas caronas</LastMatchsText>
+
+        <LastMatchContainer>
+          <ClockIcon />
+          <LastMathsContainerText>
+            <LastRideText>Casa {"->"} Campus Gama</LastRideText>
+            <RideTypeText>Motorista</RideTypeText>
+          </LastMathsContainerText>
+        </LastMatchContainer>
+        <Separator />
+        <LastMatchContainer>
+          <ClockIcon />
+          <LastMathsContainerText>
+            <LastRideText>Casa {"->"} Campus Darcy Ribeiro</LastRideText>
+            <RideTypeText>Motorista</RideTypeText>
+          </LastMathsContainerText>
+        </LastMatchContainer>
+        <Separator />
+        <LastMatchContainer>
+          <ClockIcon />
+          <LastMathsContainerText>
+            <LastRideText>Casa {"->"} Campus Ceilandia</LastRideText>
+            <RideTypeText>Motorista</RideTypeText>
+          </LastMathsContainerText>
+        </LastMatchContainer>
+        <Separator />
+        <LastMatchContainer>
+          <ClockIcon />
+          <LastMathsContainerText>
+            <LastRideText>Casa {"->"} Campus Planaltina</LastRideText>
+            <RideTypeText>Motorista</RideTypeText>
+          </LastMathsContainerText>
+        </LastMatchContainer>
+        <Separator />
+      </View>
     </Container>
   );
 }
