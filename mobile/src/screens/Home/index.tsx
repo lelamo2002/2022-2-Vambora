@@ -1,5 +1,5 @@
 import React, { StatusBar, View, Platform } from "react-native";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Container,
   TrajectContainer,
@@ -17,20 +17,66 @@ import {
   RideTypeText,
   TrajectTitle,
 } from "./styles";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { PROVIDER_GOOGLE } from "react-native-maps";
 import mapStyle from "./mapStyle.json";
 import HomeIcon from "../../assets/home";
 import SchoolIcon from "../../assets/school";
 import ClockIcon from "../../assets/clock";
 import { getBottomSpace } from "react-native-iphone-x-helper";
+import { api } from "../../services/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import MapViewDirections from "react-native-maps-directions";
+import { GOOGLE_MAPS_API_KEY } from "@env";
 
 export function Home() {
   const mapRef = useRef(null);
   const [origin, setOrigin] = useState({
-    latitude: -15.98928,
-    longitude: -48.04454,
+    latitude: 0,
+    longitude: 0,
   });
+  const [destination, setDestination] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
+
+  useEffect(() => {
+    async function getUserRoute() {
+      try {
+        const response = await api.get("/route/user");
+
+        const defaultRoute = response.data.route[0];
+
+        setOrigin({
+          latitude: defaultRoute.origin[0],
+          longitude: defaultRoute.origin[1],
+        });
+
+        setDestination({
+          latitude: defaultRoute.destination[0],
+          longitude: defaultRoute.destination[1],
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    getUserRoute();
+  }, []);
+
+  useEffect(() => {
+    if (!origin || (destination.latitude === 0 && destination.longitude === 0))
+      return;
+
+    mapRef.current?.fitToSuppliedMarkers(["origin", "destination"], {
+      edgePadding: {
+        top: 50,
+        right: 50,
+        bottom: 50,
+        left: 50,
+      },
+    });
+  }, [origin, destination]);
 
   return (
     <Container>
@@ -52,7 +98,36 @@ export function Home() {
           }}
           provider={PROVIDER_GOOGLE}
           customMapStyle={mapStyle}
-        ></MapView>
+        >
+          {destination.latitude !== 0 &&
+            destination.longitude !== 0 &&
+            origin.latitude !== 0 &&
+            origin.longitude !== 0 && (
+              <MapViewDirections
+                origin={origin}
+                destination={destination}
+                apikey={GOOGLE_MAPS_API_KEY}
+                strokeWidth={3}
+                strokeColor="#8257E6"
+              />
+            )}
+          <Marker
+            coordinate={{
+              latitude: origin.latitude,
+              longitude: origin.longitude,
+            }}
+            title="Origem"
+            identifier="origin"
+          />
+          <Marker
+            coordinate={{
+              latitude: destination.latitude,
+              longitude: destination.longitude,
+            }}
+            title="Destino"
+            identifier="destination"
+          />
+        </MapView>
       </MapContainer>
       <TrajectContainer>
         <TrajectTitle>Seu trajeto padrão</TrajectTitle>

@@ -136,28 +136,16 @@ export function FirstRoute() {
       destination.longitude.toString(),
     ];
 
-    const user = await AsyncStorage.getItem("@vambora:user");
-
-    const { token } = JSON.parse(user);
-
     try {
-      await api.post(
-        "/route",
-        {
-          name: "Rota Default",
-          description: "Rota criada no registro do usuário",
-          distance: parseInt(distance.toFixed(2)),
-          duration: parseInt(duration.toFixed(2)),
-          origin: formattedOrigin,
-          destination: formattedDestination,
-          originNeighborhood,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await api.post("/route", {
+        name: "Rota Default",
+        description: "Rota criada no registro do usuário",
+        distance: parseInt(distance.toFixed(2)),
+        duration: parseInt(duration.toFixed(2)),
+        origin: formattedOrigin,
+        destination: formattedDestination,
+        originNeighborhood,
+      });
 
       alert("Sucesso!");
     } catch (error) {

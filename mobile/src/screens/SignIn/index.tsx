@@ -53,6 +53,7 @@ export default function SingIn() {
         id: response.data.user.id,
         email: response.data.user.email,
         token: response.data.token,
+        refreshToken: response.data.refreshToken.id,
       };
 
       await AsyncStorage.setItem("@vambora:user", JSON.stringify(user));
@@ -63,7 +64,7 @@ export default function SingIn() {
         return;
       }
 
-      navigation.navigate("Início");
+      navigation.navigate("BottomTabs");
     } catch (error) {
       if (error.response.data.message === "Verify your account to continue") {
         setErrorMessage("Verifique sua conta para continuar!");
@@ -77,6 +78,14 @@ export default function SingIn() {
 
     setIsLoading(false);
     setIsButtonDisabled(false);
+  }
+
+  function handleEmail(e: any) {
+    setEmail(e);
+
+    if (e.length >= 9) {
+      setEmail(e + "@aluno.unb.br");
+    }
   }
 
   return (
@@ -94,9 +103,10 @@ export default function SingIn() {
       <Form>
         <Title>E-mail institucional</Title>
         <InputText
-          onChangeText={setEmail}
+          onChangeText={(e) => handleEmail(e)}
           autoComplete="off"
           autoCorrect={false}
+          value={email}
         />
         <Title>Senha</Title>
         <InputText secureTextEntry={true} onChangeText={setPassword} />
