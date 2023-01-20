@@ -14,7 +14,7 @@ import {
   RoutesContainer,
   Title,
 } from "./styles";
-import { Alert, Platform, View } from "react-native";
+import { Alert, LogBox, Platform, Text, View, YellowBox } from "react-native";
 import {
   getCurrentPositionAsync,
   requestForegroundPermissionsAsync,
@@ -24,9 +24,10 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { GOOGLE_MAPS_API_KEY } from "@env";
 import MapViewDirections from "react-native-maps-directions";
 import { api } from "../../services/api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Geocoder from "react-native-geocoding";
 import { SafeAreaView } from "react-native-safe-area-context";
+import mapStyle from "../mapStyle.json";
+import { useNavigation } from "@react-navigation/native";
 
 export function FirstRoute() {
   const [origin, setOrigin] = useState({
@@ -43,6 +44,7 @@ export function FirstRoute() {
   const [distance, setDistance] = useState(0);
   const [originNeighborhood, setOriginNeighborhood] = useState("");
   const mapRef = useRef(null);
+  const navigation = useNavigation<any>();
 
   useEffect(() => {
     Geocoder.init(GOOGLE_MAPS_API_KEY);
@@ -74,9 +76,6 @@ export function FirstRoute() {
               info.results[0].address_components[
                 info.results[0].address_components.length - 5
               ].long_name
-                .toLowerCase()
-                .split(" ")
-                .join("-")
             );
           });
         }
@@ -98,6 +97,8 @@ export function FirstRoute() {
         left: 50,
       },
     });
+
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, [origin, destination]);
 
   function handleSelection(campus: string) {
@@ -138,16 +139,17 @@ export function FirstRoute() {
 
     try {
       await api.post("/route", {
-        name: "Rota Default",
-        description: "Rota criada no registro do usuário",
+        originName: "Rota Default",
         distance: parseInt(distance.toFixed(2)),
         duration: parseInt(duration.toFixed(2)),
         origin: formattedOrigin,
         destination: formattedDestination,
         originNeighborhood,
+        originNeighborhoodSlug: originNeighborhood,
+        destinationName: campus,
       });
 
-      alert("Sucesso!");
+      navigation.navigate("BottomTabs");
     } catch (error) {
       alert("Erro!");
       console.log(error);
@@ -170,6 +172,7 @@ export function FirstRoute() {
               longitudeDelta: 0.005,
             }}
             provider={PROVIDER_GOOGLE}
+            customMapStyle={mapStyle}
           >
             {destination.latitude !== 0 && destination.longitude !== 0 && (
               <MapViewDirections
@@ -235,7 +238,16 @@ export function FirstRoute() {
                 },
                 textInput: {
                   fontSize: 18,
+                  backgroundColor: "#333",
+                  color: "#fff",
                 },
+                row: {
+                  backgroundColor: "#333",
+                },
+              }}
+              textInputProps={{
+                placeholderTextColor: "#666",
+                autoCorrect: false,
               }}
               query={{
                 key: GOOGLE_MAPS_API_KEY,
@@ -250,18 +262,47 @@ export function FirstRoute() {
                   latitude: details.geometry.location.lat,
                   longitude: details.geometry.location.lng,
                 });
-                setOriginNeighborhood(
-                  data.terms[data.terms.length - 4].value
-                    .toLowerCase()
-                    .split(" ")
-                    .join("-")
-                );
+                setOriginNeighborhood(data.terms[data.terms.length - 4].value);
               }}
               fetchDetails={true}
               GooglePlacesSearchQuery={{
                 rankby: "distance",
               }}
               enableHighAccuracyLocation={true}
+              renderRow={(rowProps) => {
+                const title = rowProps.structured_formatting.main_text;
+                const address = rowProps.structured_formatting.secondary_text;
+
+                return (
+                  <View
+                    style={{
+                      backgroundColor: "transparent",
+                      paddingVertical: 0,
+                      paddingHorizontal: 0,
+                      flex: 1,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "#fff",
+                        fontSize: 18,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {title}
+                    </Text>
+                    <Text
+                      style={{
+                        color: "#fff",
+                        fontSize: 16,
+                        marginTop: 8,
+                      }}
+                    >
+                      {address}
+                    </Text>
+                  </View>
+                );
+              }}
             />
           </View>
           <Label>Para qual campus você vai?</Label>

@@ -10,6 +10,7 @@ interface ButtonProps {
 
 export const Container = styled.View`
   flex: 1;
+  background: #262626;
 `;
 
 export const HalfContainer = styled.View`
@@ -32,7 +33,7 @@ export const Label = styled.Text`
   font-size: 20px;
   margin-bottom: 10px;
   font-weight: bold;
-  color: #333;
+  color: #fff;
 `
 
 export const Input = styled.TextInput`
@@ -54,7 +55,7 @@ export const CampusRow = styled.View`
 `
 
 export const Campus = styled.TouchableOpacity<CampusProps>`
-  border: 1px solid #ccc;
+  border: 1px solid #444;
   padding: 8px;
   width: 125px;
   margin: 10px;
@@ -66,7 +67,7 @@ export const CampusText = styled.Text<CampusProps>`
   font-weight: 600;
   font-size: 16px;
   text-align: center;
-  color: ${(props) => props.isSelected ? "#fff" : "#333"};
+  color: #fff
 `
 
 export const ContinueButton = styled.TouchableOpacity<ButtonProps>`

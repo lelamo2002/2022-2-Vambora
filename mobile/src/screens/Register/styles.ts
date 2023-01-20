@@ -37,6 +37,7 @@ export const InputText = styled.TextInput`
   border-radius: 8px;
   background: #333;
   margin-bottom: 20px;
+  color: #fff;
 `;
 
 export const NoRegisterText = styled.Text`

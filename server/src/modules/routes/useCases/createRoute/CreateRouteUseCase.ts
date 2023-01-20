@@ -4,7 +4,8 @@ import { inject, injectable } from "tsyringe";
 
 interface IRequest {
   userId: string,
-  name: string,
+  originName: string,
+  destinationName: string,
   distance: number,
   duration: number,
   origin: string[],
@@ -18,19 +19,21 @@ class CreateRouteUseCase {
     @inject("RoutesRepository")
     private routesRepository: IRoutesRepository,
   ) { }
-  async execute({ userId, name, distance, duration, origin, destination, originNeighborhood }: IRequest) {
-    if (!name || !distance || !duration || !origin || !destination || !originNeighborhood) {
+  async execute({ userId, originName, distance, duration, origin, destination, originNeighborhood, destinationName }: IRequest) {
+    if (!originName || !distance || !duration || !origin || !destination || !originNeighborhood || !destinationName) {
       throw new AppError("Missing parameters")
     }
 
     const route = await this.routesRepository.create({
       userId,
-      name,
+      originName,
       distance,
       duration,
       origin,
       destination,
-      originNeighborhood: originNeighborhood.toLowerCase()
+      originNeighborhood: originNeighborhood,
+      destinationName,
+      originNeighborhoodSlug: originNeighborhood.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ""),
     })
 
     return route

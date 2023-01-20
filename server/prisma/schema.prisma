@@ -42,13 +42,16 @@ model RefreshToken {
 }
 
 model Route {
-  id                 String   @id @default(uuid())
-  name               String
-  distance           Int
-  duration           Int
-  destination        String[]
-  origin             String[]
-  originNeighborhood String
+  id String @id @default(uuid())
+
+  originName             String
+  destinationName        String
+  distance               Int
+  duration               Int
+  destination            String[]
+  origin                 String[]
+  originNeighborhoodSlug String
+  originNeighborhood     String
 
   createdAt DateTime @default(now())
   createdBy String

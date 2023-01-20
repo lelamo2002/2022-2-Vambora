@@ -6,12 +6,14 @@ class RoutesRepostoryInMemory implements IRoutesRepository {
   private routesRepository: Route[] = []
 
   async create(data: ICreateRouteDTO): Promise<Route> {
-    const { name, destination, distance, duration, origin, originNeighborhood } = data;
+    const { originName, destinationName, originNeighborhoodSlug, destination, distance, duration, origin, originNeighborhood } = data;
 
     const route: Route = Object.assign({
       id: Math.random().toString(36).substr(2, 9),
       userId: "fixed",
-      name,
+      originName,
+      destinationName,
+      originNeighborhoodSlug,
       origin,
       destination,
       duration,

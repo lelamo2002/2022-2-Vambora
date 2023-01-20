@@ -5,18 +5,19 @@ import { prisma } from "prisma";
 
 class PrismaRoutesRepository implements IRoutesRepository {
   async create(data: ICreateRouteDTO): Promise<Route> {
-    const { distance, duration, name, destination, origin, userId, originNeighborhood } = data
+    const { distance, duration, originName, destination, origin, userId, originNeighborhood, originNeighborhoodSlug, destinationName } = data
 
     const route = await prisma.route.create({
       data: {
-        
         distance,
         duration,
-        name,
+        originName,
         destination,
         origin,
         createdBy: userId,
-        originNeighborhood
+        originNeighborhood,
+        originNeighborhoodSlug,
+        destinationName
       }
     })
 

@@ -19,13 +19,12 @@ import {
 } from "./styles";
 import MapView, { Marker } from "react-native-maps";
 import { PROVIDER_GOOGLE } from "react-native-maps";
-import mapStyle from "./mapStyle.json";
+import mapStyle from "../mapStyle.json";
 import HomeIcon from "../../assets/home";
 import SchoolIcon from "../../assets/school";
 import ClockIcon from "../../assets/clock";
 import { getBottomSpace } from "react-native-iphone-x-helper";
 import { api } from "../../services/api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_MAPS_API_KEY } from "@env";
 
@@ -86,7 +85,6 @@ export function Home() {
         <MapView
           style={{
             height: 270,
-            width: 363,
             borderRadius: 20,
           }}
           ref={mapRef}
@@ -104,8 +102,14 @@ export function Home() {
             origin.latitude !== 0 &&
             origin.longitude !== 0 && (
               <MapViewDirections
-                origin={origin}
-                destination={destination}
+                origin={{
+                  latitude: parseFloat(origin.latitude.toString()),
+                  longitude: parseFloat(origin.longitude.toString()),
+                }}
+                destination={{
+                  latitude: parseFloat(destination.latitude.toString()),
+                  longitude: parseFloat(destination.longitude.toString()),
+                }}
                 apikey={GOOGLE_MAPS_API_KEY}
                 strokeWidth={3}
                 strokeColor="#8257E6"

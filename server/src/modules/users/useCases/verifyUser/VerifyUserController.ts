@@ -4,8 +4,7 @@ import { VerifyUserUseCase } from "./VerifyUserUseCase";
 
 class VerifyUserController {
   async handle(req: Request, res: Response) {
-    const { user_id } = req.headers
-    const { verificationCode } = req.body
+    const { verificationCode, user_id } = req.body
 
     const verifyUserUseCase = container.resolve(VerifyUserUseCase)
 

@@ -64,7 +64,13 @@ export default function SingIn() {
         return;
       }
 
-      navigation.navigate("BottomTabs");
+      const isFirstTime = await api.get("/route/user");
+
+      if (isFirstTime.data.route.length === 0) {
+        navigation.navigate("FirstRoute");
+      } else {
+        navigation.navigate("BottomTabs");
+      }
     } catch (error) {
       if (error.response.data.message === "Verify your account to continue") {
         setErrorMessage("Verifique sua conta para continuar!");
