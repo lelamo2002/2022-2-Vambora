@@ -5,5 +5,6 @@ export interface IRoutesRepository {
   create(data: ICreateRouteDTO): Promise<Route>;
   findById(id: string): Promise<Route | null>;
   listByUser(userId: string): Promise<Route[] | null>;
+  listByNeighborhood(neighborhood: string): Promise<Route[] | null>;
   delete(id: string): Promise<void>;
 }

@@ -1,10 +1,10 @@
-import { inject, injectable } from "tsyringe";
-import * as bcrypt from 'bcryptjs'
-import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { AppError } from "@shared/errors/AppError";
-import { GenerateRefreshToken } from "@modules/users/provider/GenerateRefreshToken";
-import { RefreshToken } from "@prisma/client";
-import { GenerateToken } from "@modules/users/provider/GenerateToken";
+import { inject, injectable } from "tsyringe"
+import * as bcrypt from "bcryptjs"
+import { IUsersRepository } from "@modules/users/repositories/IUsersRepository"
+import { AppError } from "@shared/errors/AppError"
+import { GenerateRefreshToken } from "@modules/users/provider/GenerateRefreshToken"
+import { RefreshToken } from "@prisma/client"
+import { GenerateToken } from "@modules/users/provider/GenerateToken"
 
 interface IRequest {
   email: string;

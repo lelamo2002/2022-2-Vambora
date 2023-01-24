@@ -1,6 +1,6 @@
-import { IRoutesRepository } from "@modules/routes/repositories/IRoutesRepository";
-import { AppError } from "@shared/errors/AppError";
-import { inject, injectable } from "tsyringe";
+import { IRoutesRepository } from "@modules/routes/repositories/IRoutesRepository"
+import { AppError } from "@shared/errors/AppError"
+import { inject, injectable } from "tsyringe"
 
 interface IRequest {
   userId: string,
@@ -33,7 +33,7 @@ class CreateRouteUseCase {
       destination,
       originNeighborhood: originNeighborhood,
       destinationName,
-      originNeighborhoodSlug: originNeighborhood.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ""),
+      originNeighborhoodSlug: originNeighborhood.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
     })
 
     return route

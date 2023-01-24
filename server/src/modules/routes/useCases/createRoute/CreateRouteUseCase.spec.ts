@@ -1,8 +1,8 @@
-import 'reflect-metadata'
-import { beforeEach, describe, expect, it } from "vitest";
-import { CreateRouteUseCase } from "./CreateRouteUseCase";
-import { IRoutesRepository } from "@modules/routes/repositories/IRoutesRepository";
-import { RoutesRepostoryInMemory } from "@modules/routes/repositories/in-memory/RoutesRepositoryInMemory";
+import "reflect-metadata"
+import { beforeEach, describe, expect, it } from "vitest"
+import { CreateRouteUseCase } from "./CreateRouteUseCase"
+import { IRoutesRepository } from "@modules/routes/repositories/IRoutesRepository"
+import { RoutesRepostoryInMemory } from "@modules/routes/repositories/in-memory/RoutesRepositoryInMemory"
 
 let routesRepositoryInMemory: IRoutesRepository
 let createRouteUseCase: CreateRouteUseCase
@@ -24,6 +24,6 @@ describe("Create Route Use Case", () => {
       originNeighborhood: "Origin Neighborhood",
     })
 
-    expect(route).toHaveProperty("id");
+    expect(route).toHaveProperty("id")
   })
 })
