@@ -8,12 +8,14 @@ on:
 
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: server    
+        
+        
     runs-on: ubuntu-latest
 
     steps:
-      - name: Acess server
-        run: cd ./server/
-
       - name: Checkout
         uses: actions/checkout@v2
 
