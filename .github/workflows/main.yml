@@ -12,6 +12,9 @@ jobs:
 
     steps:
 
+      - name: Acess server
+        run: cd server/
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -20,11 +23,6 @@ jobs:
         with:
           node-version: 14
           cache: "yarn"
-
-      
-      - name: Acess server
-        run: cd server/
-
 
       - name: Install dependencies
         run: yarn
