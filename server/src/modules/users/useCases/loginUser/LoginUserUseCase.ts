@@ -2,9 +2,9 @@ import { inject, injectable } from "tsyringe"
 import * as bcrypt from "bcryptjs"
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository"
 import { AppError } from "@shared/errors/AppError"
-import { GenerateRefreshToken } from "@modules/users/provider/GenerateRefreshToken"
 import { RefreshToken } from "@prisma/client"
-import { GenerateToken } from "@modules/users/provider/GenerateToken"
+import { GenerateToken } from "@modules/users/adapters/GenerateToken"
+import { GenerateRefreshToken } from "@modules/users/adapters/GenerateRefreshToken"
 
 interface IRequest {
   email: string;
@@ -26,7 +26,9 @@ interface IResponse {
 class LoginUserUseCase {
   constructor(
     @inject("UsersRepository")
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+    @inject("GenerateToken") private generateToken:GenerateToken,
+    @inject("GenerateRefreshToken") private generateRefreshToken:GenerateRefreshToken,
   ) { }
   async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findUser(email)
@@ -46,13 +48,13 @@ class LoginUserUseCase {
       throw new AppError("Invalid credentials")
     }
 
-    const generateToken = new GenerateToken()
-    const token = await generateToken.execute(user.id)
+    // const generateToken = new GenerateToken()
+    const token = await this.generateToken.execute(user.id)
 
     await this.usersRepository.deleteUserRefreshToken(user.id)
 
-    const generateRefreshToken = new GenerateRefreshToken()
-    const refreshToken = await generateRefreshToken.execute(user.id)
+    // const generateRefreshToken = new GenerateRefreshToken()
+    const refreshToken = await this.generateRefreshToken.execute(user.id)
 
     const filteredUserData = {
       id: user.id,

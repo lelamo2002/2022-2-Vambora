@@ -6,11 +6,27 @@ import { UsersRepositoryInMemory } from "@modules/users/repositories/in-memory/U
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository"
 import { IMailAdapter } from "@shared/adapters/mail-adapter"
 import { LoginUserUseCase } from "./LoginUserUseCase"
+import { GenerateToken } from "@modules/users/adapters/GenerateToken"
+import { GenerateRefreshToken } from "@modules/users/adapters/GenerateRefreshToken"
+import { RefreshToken } from "@prisma/client"
 
 let usersRepositoryInMemory: IUsersRepository
 let createUserUseCase: CreateUserUseCase
 let loginUserUseCase: LoginUserUseCase
 let verifyUserUseCase: VerifyUserUseCase
+
+const GenerateRefreshTokenMock: GenerateRefreshToken = {
+
+  execute: async (userId:string) => {const refreshToken:RefreshToken = {
+    id: "sadi203i123sdsw0aidwad0",
+    userId: userId,
+    expiresIn: 2000,
+  } ;return refreshToken  }
+
+}
+const GenerateTokenMock: GenerateToken = {
+  execute: async (userId:string) => {return await userId}
+}
 
 const mailAdapterMock: IMailAdapter = {
   sendMail: () => Promise.resolve(),
@@ -20,7 +36,7 @@ describe("Create User", () => {
   beforeEach(() => {
     usersRepositoryInMemory = new UsersRepositoryInMemory()
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory, mailAdapterMock)
-    loginUserUseCase = new LoginUserUseCase(usersRepositoryInMemory)
+    loginUserUseCase = new LoginUserUseCase(usersRepositoryInMemory,GenerateTokenMock,GenerateRefreshTokenMock)
     verifyUserUseCase = new VerifyUserUseCase(usersRepositoryInMemory)
   })
 
