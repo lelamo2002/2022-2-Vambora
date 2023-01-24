@@ -24,16 +24,26 @@ jobs:
       - name: Install dependencies
         run: cd ./server && yarn
 
+  lint:
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
       - name: linting
         run: cd ./server && yarn lint
 
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Run test
         run: cd ./server && npm test
 
       - name: Vitest Coverage Report
         uses: davelosert/vitest-coverage-report-action@v1.3.1
         with:
-          vite-config-path: ./server/vite.config.js
-          json-summary-path: ./server/coverage/coverage-summary.json
-          json-final-path: ./server/coverage/coverage-final.json
+          vite-config-path: ./vite.config.js
+          json-summary-path: ./coverage/coverage-summary.json
+          json-final-path: ./coverage/coverage-final.json
           working-directory: ./server
