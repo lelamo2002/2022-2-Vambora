@@ -23,8 +23,7 @@ jobs:
 
       
       - name: Acess server
-
-      run: cd server/
+        run: cd server/
 
 
       - name: Install dependencies
@@ -37,5 +36,5 @@ jobs:
         run: npm test
 
       - name: Vitest Coverage Report
-      uses: davelosert/vitest-coverage-report-action@v1.3.1
+        uses: davelosert/vitest-coverage-report-action@v1.3.1
         
