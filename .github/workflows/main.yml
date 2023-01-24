@@ -8,36 +8,32 @@ on:
 
 jobs:
   build:
-    defaults:
-      run:
-        working-directory: server    
-        
-        
     runs-on: ubuntu-latest
 
     steps:
-    
-      - run: pwd
-    
       - name: Checkout
-        uses: actions/checkout@v2
-
-      - run: pwd
+        uses: actions/checkout@v3.3.0
 
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 14
           cache: "yarn"
+          cache-dependency-path: server
 
       - name: Install dependencies
-        run: yarn
+        run: cd ./server && yarn
 
       - name: linting
-        run: yarn lint
+        run: cd ./server && yarn lint
 
       - name: Run test
-        run: npm test
+        run: cd ./server && npm test
 
       - name: Vitest Coverage Report
         uses: davelosert/vitest-coverage-report-action@v1.3.1
+        with:
+          vite-config-path: ./server/vite.config.js
+          json-summary-path: ./server/coverage/coverage-summary.json
+          json-final-path: ./server/coverage/coverage-final.json
+          working-directory: ./server
