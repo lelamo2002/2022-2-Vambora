@@ -1,4 +1,4 @@
-import { RefreshToken, User } from "@prisma/client"
+import { User } from "@prisma/client"
 import { prisma } from "../../../../../prisma"
 import { ICreateUserDTO } from "../../../dtos/ICreateUserDTO"
 import { IUsersRepository } from "../../IUsersRepository"
@@ -83,24 +83,6 @@ class PrismaUsersRepository implements IUsersRepository {
     await prisma.user.delete({
       where: {
         id: user_id
-      }
-    })
-  }
-
-  async findRefreshToken(refresh_token: string): Promise<RefreshToken | null> {
-    const refreshToken = await prisma.refreshToken.findFirst({
-      where: {
-        id: refresh_token
-      }
-    })
-
-    return refreshToken
-  }
-
-  async deleteUserRefreshToken(user_id: string): Promise<void> {
-    await prisma.refreshToken.deleteMany({
-      where: {
-        userId: user_id
       }
     })
   }
