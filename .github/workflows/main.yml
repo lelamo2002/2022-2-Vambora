@@ -31,6 +31,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3.3.0
+        
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          cache: "yarn"
+          cache-dependency-path: server
+          
       - name: linting
         run: cd ./server && yarn lint
 
@@ -42,6 +50,14 @@ jobs:
     
       - name: Checkout
         uses: actions/checkout@v3.3.0
+        
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          cache: "yarn"
+          cache-dependency-path: server
+          
       - name: Run test
         run: cd ./server && npm test
 
