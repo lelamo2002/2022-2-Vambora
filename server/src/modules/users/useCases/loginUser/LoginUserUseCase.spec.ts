@@ -6,26 +6,35 @@ import { UsersRepositoryInMemory } from "@modules/users/repositories/in-memory/U
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository"
 import { IMailAdapter } from "@shared/adapters/mail-adapter"
 import { LoginUserUseCase } from "./LoginUserUseCase"
-import { GenerateToken } from "@modules/users/adapters/GenerateToken"
-import { GenerateRefreshToken } from "@modules/users/adapters/GenerateRefreshToken"
 import { RefreshToken } from "@prisma/client"
+import { ITokenAdapter } from "@modules/users/adapters/token-adapter"
 
 let usersRepositoryInMemory: IUsersRepository
 let createUserUseCase: CreateUserUseCase
 let loginUserUseCase: LoginUserUseCase
 let verifyUserUseCase: VerifyUserUseCase
 
-const GenerateRefreshTokenMock: GenerateRefreshToken = {
+const TokenAdapterMock: ITokenAdapter = {
+  generateRefreshToken: async (userId: string) => {
+    const refreshToken: RefreshToken = {
+      id: "sadi203i123sdsw0aidwad0",
+      userId: userId,
+      expiresIn: 2000,
+    }
+    return refreshToken
+  },
 
-  execute: async (userId:string) => {const refreshToken:RefreshToken = {
-    id: "sadi203i123sdsw0aidwad0",
-    userId: userId,
-    expiresIn: 2000,
-  } ;return refreshToken  }
+  generateToken: function (user_id: string): string {
+    return user_id;
+  },
 
-}
-const GenerateTokenMock: GenerateToken = {
-  execute: async (userId:string) => {return await userId}
+  findRefreshToken: function (refresh_token: string): Promise<RefreshToken | null> {
+    return Promise.resolve(null)
+  },
+
+  deleteUserRefreshToken: function (user_id: string): Promise<void> {
+    return Promise.resolve()
+  }
 }
 
 const mailAdapterMock: IMailAdapter = {
@@ -36,7 +45,7 @@ describe("Create User", () => {
   beforeEach(() => {
     usersRepositoryInMemory = new UsersRepositoryInMemory()
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory, mailAdapterMock)
-    loginUserUseCase = new LoginUserUseCase(usersRepositoryInMemory,GenerateTokenMock,GenerateRefreshTokenMock)
+    loginUserUseCase = new LoginUserUseCase(usersRepositoryInMemory, TokenAdapterMock)
     verifyUserUseCase = new VerifyUserUseCase(usersRepositoryInMemory)
   })
 

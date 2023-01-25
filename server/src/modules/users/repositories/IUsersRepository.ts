@@ -9,6 +9,4 @@ export interface IUsersRepository {
   verifyUser(user_id: string): Promise<void>;
   updateUser(user_id: string, name?: string, email?: string, password?: string, enrollment?: string, verificationCode?: number): Promise<User | null>;
   deleteUser(user_id: string): Promise<void>;
-  findRefreshToken(refresh_token: string): Promise<RefreshToken | null>
-  deleteUserRefreshToken(user_id: string): Promise<void>
 }

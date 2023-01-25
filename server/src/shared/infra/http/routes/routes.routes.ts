@@ -14,5 +14,5 @@ const deleteRouteController = new DeleteRouteController()
 
 routesRoutes.post("/", ensureAuthenticated, createRouteController.handle)
 routesRoutes.get("/user", ensureAuthenticated, listRoutesByUserController.handle)
-routesRoutes.get("/:neighborhood", ensureAuthenticated, listRoutesByNeighborhoodController.handle)
+routesRoutes.get("/neighborhood", ensureAuthenticated, listRoutesByNeighborhoodController.handle)
 routesRoutes.delete("/:id", ensureAuthenticated, deleteRouteController.handle)
