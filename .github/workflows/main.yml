@@ -65,7 +65,7 @@ jobs:
         run: cd ./server && yarn
           
       - name: Run test
-        run: cd ./server && npm coverage
+        run: cd ./server && yarn coverage
 
       - name: Vitest Coverage Report
         uses: davelosert/vitest-coverage-report-action@v1.3.1
